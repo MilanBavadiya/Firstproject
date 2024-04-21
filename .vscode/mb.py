@@ -1,1 +1,1 @@
-print("MB is the best")
+print(input("hello enter your name"))
