@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to My Server</title>
+</head>
+<body>
+    <!-- CloudFormation Logo -->
+    <img src="https://s3-us-west-2.amazonaws.com/cloudformation-examples-us-west-2/cloudformation_graphic.png" alt="AWS CloudFormation Logo" style="width: 200px;">
+
+    <h1>Welcome to My Server</h1>
+    <p>This is the IP address of the server:</p>
+    <p id="ip-address"></p>
+
+    <script>
+        // JavaScript code to fetch and display the server's IP address
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ip-address').innerText = data.ip;
+            })
+            .catch(error => {
+                console.error('Error fetching IP address:', error);
+                document.getElementById('ip-address').innerText = 'Error fetching IP address';
+            });
+    </script>
+</body>
+</html>
