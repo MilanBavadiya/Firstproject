@@ -1,103 +1,17 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'CloudFormation Template for launching multiple EC2 instances with gp3 EBS volume and a new security group'
-
-Parameters:
-  InstanceCount:
-    Type: Number
-    Default: 5
+Description: 'CloudFormation Template to launch an EC2 instance'
 
 Resources:
-  MyEC2Instance1:
+  MyEC2Instance:
     Type: AWS::EC2::Instance
     Properties:
-      ImageId: ami-051f8a213df8bc089   # AMI ID
+      ImageId: ami-04e5276ebb8451442   # Specified AMI ID
       InstanceType: t2.micro            # Instance type
-      SecurityGroupIds:
-        - !Ref MySecurityGroup         # Reference to the new security group
-      BlockDeviceMappings:
-        - DeviceName: /dev/sda1
-          Ebs:
-            VolumeSize: 8
-            VolumeType: gp3             # EBS volume type gp3
-            DeleteOnTermination: true   # Delete volume on instance termination
-      DisableApiTermination: true      # Do not allow instance termination via API
+      SecurityGroups:
+        - default                       # Use default security group
+      KeyName: my-keypair               # Specify your SSH key pair name here
 
-  MyEC2Instance2:
-    Type: AWS::EC2::Instance
-    Properties:
-      ImageId: ami-051f8a213df8bc089
-      InstanceType: t2.micro
-      SecurityGroupIds:
-        - !Ref MySecurityGroup
-      BlockDeviceMappings:
-        - DeviceName: /dev/sda1
-          Ebs:
-            VolumeSize: 8
-            VolumeType: gp3
-            DeleteOnTermination: true
-      DisableApiTermination: true
-
-  MyEC2Instance3:
-    Type: AWS::EC2::Instance
-    Properties:
-      ImageId: ami-051f8a213df8bc089
-      InstanceType: t2.micro
-      SecurityGroupIds:
-        - !Ref MySecurityGroup
-      BlockDeviceMappings:
-        - DeviceName: /dev/sda1
-          Ebs:
-            VolumeSize: 8
-            VolumeType: gp3
-            DeleteOnTermination: true
-      DisableApiTermination: true
-
-  MyEC2Instance4:
-    Type: AWS::EC2::Instance
-    Properties:
-      ImageId: ami-051f8a213df8bc089
-      InstanceType: t2.micro
-      SecurityGroupIds:
-        - !Ref MySecurityGroup
-      BlockDeviceMappings:
-        - DeviceName: /dev/sda1
-          Ebs:
-            VolumeSize: 8
-            VolumeType: gp3
-            DeleteOnTermination: true
-      DisableApiTermination: true
-
-  MyEC2Instance5:
-    Type: AWS::EC2::Instance
-    Properties:
-      ImageId: ami-051f8a213df8bc089
-      InstanceType: t2.micro
-      SecurityGroupIds:
-        - !Ref MySecurityGroup
-      BlockDeviceMappings:
-        - DeviceName: /dev/sda1
-          Ebs:
-            VolumeSize: 8
-            VolumeType: gp3
-            DeleteOnTermination: true
-      DisableApiTermination: true
-
-  MySecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-      GroupDescription: Allow SSH, HTTP, and HTTPS traffic
-      SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 22
-          ToPort: 22
-          CidrIp: 0.0.0.0/0            # Allow SSH from anywhere
-        - IpProtocol: tcp
-          FromPort: 80
-          ToPort: 80
-          CidrIp: 0.0.0.0/0            # Allow HTTP from cd
-          anywhere
-        - IpProtocol: tcp
-          FromPort: 443
-          ToPort: 443
-          CidrIp: 0.0.0.0/0            # Allow HTTPS from anywhere
-
+Outputs:
+  InstanceID:
+    Description: ID of the launched instance
+    Value: !Ref MyEC2Instance
